@@ -62,6 +62,8 @@ namespace NoughtsAndCrossesConsoleApp.GameLogics
 
         protected string PlayerMove { get; set; }
         protected bool LoadingException { get; set; }
+        protected GameMode GameMode { get; set; }
+        public char[] RecentGameBoard { get; set; }
 
         public GameModel()
         {
