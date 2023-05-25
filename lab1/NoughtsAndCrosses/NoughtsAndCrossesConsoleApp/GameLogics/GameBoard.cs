@@ -32,9 +32,10 @@ namespace NoughtsAndCrossesConsoleApp.GameLogics
             return symbols.Contains(Board[numberOfCell - 1]);
         }
 
-        public abstract void PrintBoard(char[] playersSymbols, int[] playersScore, int playersTurn, bool loadingException = false);
+        public abstract void PrintBoard(char[] playersSymbols, int[] playersScore, int playersTurn, GameMode gameMode, bool loadingException = false);
         public abstract string ChooseCell(string exception = null);
-        public abstract bool GameOver(int result);
+        public abstract GameMode ChooseGameMode();
+        public abstract bool GameOver(int result, GameMode gameMode);
 
         public int IsGameOver(char[] symbols)
         {          
