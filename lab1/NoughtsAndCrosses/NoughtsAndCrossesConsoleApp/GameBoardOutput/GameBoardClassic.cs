@@ -9,17 +9,24 @@ namespace NoughtsAndCrossesConsoleApp.GameBoardOutput
 
         public GameBoardClassic() : base() { }
 
-        public override void PrintBoard(char[] playersSymbols, int[] playersScore, int playersTurn, bool loadingException = false)
+        private void PrintHeader()
+        {
+            Console.WriteLine(" Welcome to Noughts And Crosses!\n");
+        }
+        public override void PrintBoard(char[] playersSymbols, int[] playersScore, int playersTurn, GameMode gameMode, bool loadingException = false)
         {
             Console.Clear();
             if (loadingException)
                 ColorConsoleOutput.Print(" No saved game was found!\n", ConsoleColor.DarkYellow);
 
-            Console.WriteLine(" Welcome to Noughts And Crosses!\n");
+            PrintHeader();
             Console.WriteLine($" Player 1: {playersSymbols[0]} [{playersScore[0]}]");
-            Console.WriteLine($" Player 2: {playersSymbols[1]} [{playersScore[1]}]\n\n");
+            if (gameMode == GameMode.Single)             
+                Console.WriteLine($" Computer: {playersSymbols[1]} [{playersScore[1]}]\n\n");            
+            else 
+                Console.WriteLine($" Player 2: {playersSymbols[1]} [{playersScore[1]}]\n\n");
 
-            Console.WriteLine($" Player {playersTurn}'s turn. Select from 1 to 9 from the game board.\n\n");
+                Console.WriteLine($" Player {playersTurn}'s turn. Select from 1 to 9 from the game board.\n\n");
 
             Console.WriteLine(
                 $"  {Board[0]} | {Board[1]} | {Board[2]}\n" +
@@ -42,10 +49,16 @@ namespace NoughtsAndCrossesConsoleApp.GameBoardOutput
             return input;
         }
 
-        public override bool GameOver(int result)
+        public override bool GameOver(int result, GameMode gameMode)
         {
             if (result != 0)
-                ColorConsoleOutput.Print($"\n Player {result} has won!", ConsoleColor.Magenta);
+            {
+                if (gameMode == GameMode.Single && result == 2)
+                    ColorConsoleOutput.Print($"\n Computer has won!", ConsoleColor.Magenta);
+                else
+                    ColorConsoleOutput.Print($"\n Player {result} has won!", ConsoleColor.Magenta);
+            }
+                
             else
                 ColorConsoleOutput.Print("\n It's a draw!", ConsoleColor.Magenta);
 
@@ -57,6 +70,7 @@ namespace NoughtsAndCrossesConsoleApp.GameBoardOutput
                 if (!validInput)
                     ColorConsoleOutput.Print("\n Invalid input.", ConsoleColor.DarkRed);
                 ColorConsoleOutput.Print("\n Do you want to play again? (y/n)", ConsoleColor.DarkYellow);
+                Console.Write(" ");
                 string input = Console.ReadLine().ToLower();
 
                 if (input == "y" || input == "yes")
@@ -74,9 +88,49 @@ namespace NoughtsAndCrossesConsoleApp.GameBoardOutput
                     validInput = false;
                 }
 
-            } while (!validInput);          
+            } while (!validInput);
 
             return repeat;
+        }
+
+        public override GameMode ChooseGameMode()
+        {
+            GameMode mode = GameMode.Single;
+            bool validInput = true;
+            do
+            {
+                Console.Clear();
+                PrintHeader();
+                if (!validInput)
+                    ColorConsoleOutput.Print(" Invalid input.", ConsoleColor.DarkRed);
+                Console.WriteLine("\n Choose the game mode:\n  1 - single\n  2 - two player");
+                Console.Write("\n>> ");
+                string input = Console.ReadLine();
+                int inputNum;
+                bool isNum = int.TryParse(input, out inputNum);
+
+                if (!isNum)
+                {
+                    validInput = false;
+                }
+                else if (inputNum == 1)
+                {
+                    mode = GameMode.Single;
+                    validInput = true;
+                }
+                else if (inputNum == 2)
+                {
+                    mode = GameMode.TwoPlayer;
+                    validInput = true;
+                }
+                else
+                {
+                    validInput = false;
+                }
+
+            } while (!validInput);
+
+            return mode;
         }
     }
 }
