@@ -1,16 +1,23 @@
 ﻿using CompositeHTML.LightLibrary;
 using CompositeHTML.LightParser;
 
-LightElementNode node =
-    new LightElementNode("div", "Node", DisplayType.Block,
-    new List<string>() { "white", "block" });
-Console.WriteLine(node.OuterHTML());
-Console.Write("\nEnter class name you want to add: ");
-var css = Console.ReadLine();
-Console.WriteLine();
-node.AddCssClass(css);
-Console.WriteLine();
-Console.WriteLine(node.OuterHTML());
+string path = "https://learn.ztu.edu.ua/file.txt";
+//path = Directory.GetCurrentDirectory() + "\\file";
+var image = new LightImageNode(path, null);
+Console.WriteLine(image.Image);
+
+
+//LightElementNode node =
+//    new LightElementNode("div", "Node", DisplayType.Block,
+//    new List<string>() { "white", "block" });
+//Console.WriteLine(node.OuterHTML());
+//Console.Write("\nEnter class name you want to add: ");
+//var css = Console.ReadLine();
+//Console.WriteLine();
+//node.AddCssClass(css);
+//Console.WriteLine();
+//Console.WriteLine(node.OuterHTML());
+
 
 //LightElementNode parent =
 //    new LightElementNode("div", "First Parent", DisplayType.Block, 
