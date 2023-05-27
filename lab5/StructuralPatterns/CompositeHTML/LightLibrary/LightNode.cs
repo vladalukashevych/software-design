@@ -1,4 +1,6 @@
-﻿namespace CompositeHTML.LightLibrary
+﻿using CompositeHTML.Observer;
+
+namespace CompositeHTML.LightLibrary
 {
     public abstract class LightNode
     {
@@ -7,6 +9,8 @@
         public DisplayType DisplayType { get; private set; }
         public ClosureType ClosureType { get; private set; }
         public List<string> CssClasses { get; set; }
+
+        private IObserver _addCssClassObserver = new AddCssClassObserver();
 
         public LightNode(string tagName, string text, DisplayType displayType,
             ClosureType closureType, List<string> cssClasses)
@@ -51,5 +55,11 @@
         }
 
         public abstract LightNode Clone();
+
+        public void AddCssClass(string cssClass)
+        {
+            CssClasses.Add(cssClass);
+            _addCssClassObserver.Notify(cssClass);
+        }
     }
 }

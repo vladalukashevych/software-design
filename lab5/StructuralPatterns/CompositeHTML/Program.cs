@@ -1,29 +1,40 @@
 ﻿using CompositeHTML.LightLibrary;
 using CompositeHTML.LightParser;
 
-LightElementNode parent =
-    new LightElementNode("div", "First Parent", DisplayType.Block, 
+LightElementNode node =
+    new LightElementNode("div", "Node", DisplayType.Block,
     new List<string>() { "white", "block" });
+Console.WriteLine(node.OuterHTML());
+Console.Write("\nEnter class name you want to add: ");
+var css = Console.ReadLine();
+Console.WriteLine();
+node.AddCssClass(css);
+Console.WriteLine();
+Console.WriteLine(node.OuterHTML());
 
-LightTextNode child1 = new LightTextNode("p", "Have an awesome day!", 
-    new List<string>() { "wishes", "popping" });
-parent.AppendChild(child1);
+//LightElementNode parent =
+//    new LightElementNode("div", "First Parent", DisplayType.Block, 
+//    new List<string>() { "white", "block" });
 
-LightTextNode child2 = new LightTextNode("a", "Link", 
-    new List<string>() { "link", "small-text" });
-parent.AppendChild(child2);
+//LightTextNode child1 = new LightTextNode("p", "Have an awesome day!", 
+//    new List<string>() { "wishes", "popping" });
+//parent.AppendChild(child1);
 
-LightElementNode childParent = new LightElementNode("div", "Child Parent", DisplayType.Block, 
-    new List<string>() { "child", "exquisite" });
-parent.AppendChild(childParent);
+//LightTextNode child2 = new LightTextNode("a", "Link", 
+//    new List<string>() { "link", "small-text" });
+//parent.AppendChild(child2);
 
-childParent.AppendChild(child2);
+//LightElementNode childParent = new LightElementNode("div", "Child Parent", DisplayType.Block, 
+//    new List<string>() { "child", "exquisite" });
+//parent.AppendChild(childParent);
 
-LightElementNode parentClone = (parent.Clone() as LightElementNode)!;
-parentClone.ReplaceChild(1);
+//childParent.AppendChild(child2);
 
-Console.WriteLine(parent.OuterHTML());
-Console.WriteLine(parentClone.OuterHTML());
+//LightElementNode parentClone = (parent.Clone() as LightElementNode)!;
+//parentClone.ReplaceChild(1);
+
+//Console.WriteLine(parent.OuterHTML());
+//Console.WriteLine(parentClone.OuterHTML());
 
 
 //LightHTMLParser parser = new LightHTMLParser();
@@ -32,3 +43,4 @@ Console.WriteLine(parentClone.OuterHTML());
 
 //Console.WriteLine(node.OuterHTML());
 //Console.WriteLine(parser.GetObjectCount());
+
